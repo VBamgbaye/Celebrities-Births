@@ -1,12 +1,9 @@
 import csv
 from time import sleep
-
 import pandas as pd
 from selenium import webdriver
-
-from rds_uploader.data_upload import Dbload
-from links_scapper import YoutubeLinks
-from video import Video
+from .links_scapper import YoutubeLinks
+from .video import Video
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
@@ -28,7 +25,6 @@ class VideoData(Video):
     def __init__(self, channel: str, height: int, driver_path: str):
         self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
         self.links = YoutubeLinks(channel, height, driver_path)
-        self.db = Dbload(password=input("Enter RDS database password:"), host=input("Enter RDS database hostname:"))
         self.channel = channel
         self.height = height
         self.yt_data = []
@@ -39,16 +35,9 @@ class VideoData(Video):
         csv_file = open(
             './youtube_data.csv', 'w', encoding="UTF-8", newline="")
         writer = csv.writer(csv_file)
-        writer.writerow(['', 'title', 'description', 'hash_tags', 'views', 'comments'])
+        writer.writerow(['title', 'description', 'hash_tags', 'views', 'comments'])
         df.to_csv('./youtube_data.csv')
         csv_file.close()
-
-    def save_to_database(self):
-        df = pd.DataFrame.from_dict(self.yt_data, orient='columns')
-        self.db.create_table()
-        # Do not store into postgres with an index column
-        df.to_sql(self.db.tablename, self.db.engine, if_exists='replace', index=False)
-        print(f"Created table: {self.db.tablename}")
 
     def get_yt_data(self):
         """
@@ -82,7 +71,7 @@ class VideoData(Video):
             count += 1
             sleep(3)
 
-        self.save_to_database()
+        self.write_data_to_csv()
         self.driver.close()
 
 
