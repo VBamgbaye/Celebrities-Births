@@ -1,3 +1,4 @@
+import csv
 from time import sleep
 
 import pandas as pd
@@ -27,20 +28,20 @@ class VideoData(Video):
     def __init__(self, channel: str, height: int, driver_path: str):
         self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
         self.links = YoutubeLinks(channel, height, driver_path)
-        self.db = Dbload(password=input("Enter password:"), host=input("Enter hostname:"))
+        self.db = Dbload(password=input("Enter RDS database password:"), host=input("Enter RDS database hostname:"))
         self.channel = channel
         self.height = height
         self.yt_data = []
 
-    # def write_data_to_csv(self):
-    #     df = pd.DataFrame.from_dict(self.yt_data, orient='columns')
-    #
-    #     csv_file = open(
-    #         './youtube_data.csv', 'w', encoding="UTF-8", newline="")
-    #     writer = csv.writer(csv_file)
-    #     writer.writerow(['', 'title', 'description', 'hash_tags', 'views', 'comments'])
-    #     df.to_csv('./youtube_data.csv')
-    #     csv_file.close()
+    def write_data_to_csv(self):
+        df = pd.DataFrame.from_dict(self.yt_data, orient='columns')
+
+        csv_file = open(
+            './youtube_data.csv', 'w', encoding="UTF-8", newline="")
+        writer = csv.writer(csv_file)
+        writer.writerow(['', 'title', 'description', 'hash_tags', 'views', 'comments'])
+        df.to_csv('./youtube_data.csv')
+        csv_file.close()
 
     def save_to_database(self):
         df = pd.DataFrame.from_dict(self.yt_data, orient='columns')
