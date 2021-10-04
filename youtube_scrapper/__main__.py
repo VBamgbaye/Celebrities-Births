@@ -1,4 +1,4 @@
-from Web_Scraping_Project.youtube_scrapper.scrapper.video_data import VideoData
+from .video_data import VideoData
 
 print('This is a Web_scrapper package for Youtube')
 print('Input the youtube channel you want to scrape data from, number of videos you want to scrape and the path to '

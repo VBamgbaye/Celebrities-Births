@@ -4,9 +4,9 @@ from time import sleep
 import pandas as pd
 from selenium import webdriver
 
-from Web_Scraping_Project.youtube_scrapper.rds_uploader.data_upload import Dbload
-from Web_Scraping_Project.youtube_scrapper.scrapper.links_scapper import YoutubeLinks
-from Web_Scraping_Project.youtube_scrapper.scrapper.video import Video
+from rds_uploader.data_upload import Dbload
+from links_scapper import YoutubeLinks
+from video import Video
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
