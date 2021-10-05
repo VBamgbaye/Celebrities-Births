@@ -17,15 +17,15 @@ class YoutubeLinks:
 
     class attributes:
         channel (str): this holds the value of the youtube channel video links will be scrapped from
-        height (int): this specifies how far to scroll down the youtube page to grab links.
+        scroll_range (int): this specifies how far to scroll down the youtube page to grab each video links.
         driver_path (str): the path to Chrome Driver on system.
         driver (str): contains the specified Chrome Driver path
     """
 
-    def __init__(self, channel: str, height: int, driver_path: str):
+    def __init__(self, channel: str, scroll_range: int, driver_path: str):
         self.links = []
         self.channel = channel
-        self.height = height
+        self.scroll_range = scroll_range
         self.driver_path = driver_path
         self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
 
@@ -56,14 +56,11 @@ class YoutubeLinks:
             pass
 
     def page_scroll(self) -> None:
-        while True:
-            scroll_height = 200
-            document_height_before = self.driver.execute_script("return document.documentElement.scrollHeight")
-            self.driver.execute_script(f"window.scrollTo(0, {document_height_before + scroll_height});")
-            sleep(3)
-            document_height_after = self.driver.execute_script("return document.documentElement.scrollHeight")
-            if document_height_after > self.height:
-                break
+        for i in range(0, self.scroll_range):
+            self.driver.execute_script(
+                "window.scrollTo(0,Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,"
+                "document.documentElement.clientHeight))")
+            sleep(2)
 
     def extract_links(self):
         """
@@ -74,6 +71,7 @@ class YoutubeLinks:
         self.accept_cookies()
         sleep(2)
         self.page_scroll()
+        sleep(2)
         videos_list = Wait(self.driver, 30).until(
             ec.presence_of_all_elements_located((By.XPATH, "//*[@id='video-title']")))
         self.links = []
@@ -90,5 +88,5 @@ class YoutubeLinks:
 
 
 if __name__ == '__main__':
-    ls = YoutubeLinks('SkyNews', 10000, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = YoutubeLinks('skynews', 5, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
     ls.extract_links()

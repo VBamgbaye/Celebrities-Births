@@ -17,16 +17,18 @@ class VideoData(Video):
 
     Attributes:
         channel (str): this holds the value of the youtube channel video links will be scrapped from
-        height (int): this specifies how far to scroll down the youtube page to grab links.
+        scroll_range (int): this specifies how far to scroll down the youtube page to grab links.
+                            Note: 30 videos are captured per each scroll. When variable is set to 0,
+                            30 videos are returned
         driver_path (str): the path to Chrome Driver on system.
         driver (str): contains the specified Chrome Driver path
     """
 
-    def __init__(self, channel: str, height: int, driver_path: str):
+    def __init__(self, channel: str, scroll_range: int, driver_path: str):
         self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
-        self.links = YoutubeLinks(channel, height, driver_path)
+        self.links = YoutubeLinks(channel, scroll_range, driver_path)
         self.channel = channel
-        self.height = height
+        self.scroll_range = scroll_range
         self.yt_data = []
 
     def write_data_to_csv(self):
@@ -76,5 +78,5 @@ class VideoData(Video):
 
 
 if __name__ == '__main__':
-    ls = VideoData('SkyNews', 600, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = VideoData('SkyNews', 0, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
     ls.get_yt_data()
