@@ -90,5 +90,5 @@ class YoutubeLinks:
 
 
 if __name__ == '__main__':
-    ls = YoutubeLinks('SkyNews', 10000, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = YoutubeLinks('imaginetunez', 4000, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
     ls.extract_links()

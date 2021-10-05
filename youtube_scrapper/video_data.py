@@ -76,5 +76,5 @@ class VideoData(Video):
 
 
 if __name__ == '__main__':
-    ls = VideoData('SkyNews', 600, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = VideoData('SkyNews', 4000, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
     ls.get_yt_data()
