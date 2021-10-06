@@ -1,4 +1,4 @@
-from .video_data import VideoData
+from video_data import VideoData
 
 print('This is a Web_scrapper package for Youtube')
 print('Input the information required and let me do the rest :)')

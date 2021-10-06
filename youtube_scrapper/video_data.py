@@ -2,8 +2,9 @@ import csv
 from time import sleep
 import pandas as pd
 from selenium import webdriver
-from .links_scapper import YoutubeLinks
-from .video import Video
+from selenium.webdriver import DesiredCapabilities
+from links_scapper import YoutubeLinks
+from video import Video
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
@@ -24,9 +25,9 @@ class VideoData(Video):
         driver (str): contains the specified Chrome Driver path
     """
 
-    def __init__(self, channel: str, scroll_range: int, driver_path: str):
-        self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
-        self.links = YoutubeLinks(channel, scroll_range, driver_path)
+    def __init__(self, channel: str, scroll_range: int):
+        self.driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME, options=options)
+        self.links = YoutubeLinks(channel, scroll_range)
         self.channel = channel
         self.scroll_range = scroll_range
         self.yt_data = []
@@ -78,5 +79,5 @@ class VideoData(Video):
 
 
 if __name__ == '__main__':
-    ls = VideoData('SkyNews', 0, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = VideoData('SkyNews', 0)
     ls.get_yt_data()

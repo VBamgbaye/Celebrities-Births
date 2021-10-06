@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait as Wait
 from selenium.webdriver.support import expected_conditions as ec
@@ -22,12 +23,11 @@ class YoutubeLinks:
         driver (str): contains the specified Chrome Driver path
     """
 
-    def __init__(self, channel: str, scroll_range: int, driver_path: str):
+    def __init__(self, channel: str, scroll_range: int):
         self.links = []
         self.channel = channel
         self.scroll_range = scroll_range
-        self.driver_path = driver_path
-        self.driver = webdriver.Chrome(executable_path=driver_path, options=options)
+        self.driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME, options=options)
 
     @staticmethod
     def _is_channel_valid(x):
@@ -88,5 +88,5 @@ class YoutubeLinks:
 
 
 if __name__ == '__main__':
-    ls = YoutubeLinks('skynews', 5, r'C:\Users\Victor\Downloads\chromedriver_win32\chromedriver')
+    ls = YoutubeLinks('skynews', 5)
     ls.extract_links()
