@@ -10,8 +10,7 @@ dumped into a csv file which can then be uploaded to an Amazon RDS database.
 3. Run '_python -m youtube_scrapper_' on your terminal
 4. A prompt to enter the following information will pop up;
    1. channel - this takes the youtube channel you want to scrape data from
-   2. scroll_range - this indicates how many video you want the scrapper to look and grab information from. 
-   3. driver_path - this directs the package to the location where chromedriver is installed on your of system.
+   2. scroll_range - this indicates how many video you want the scrapper to look and grab information from.
 5. Once the information is passed in, the scrapper will start grabbing all information requested. 
 6. Once finished, the data is returned in a csv file which can be found at the directory level the package was run.
 
