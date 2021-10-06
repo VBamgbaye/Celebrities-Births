@@ -19,7 +19,6 @@ class YoutubeLinks:
     class attributes:
         channel (str): this holds the value of the youtube channel video links will be scrapped from
         scroll_range (int): this specifies how far to scroll down the youtube page to grab each video links.
-        driver_path (str): the path to Chrome Driver on system.
         driver (str): contains the specified Chrome Driver path
     """
 

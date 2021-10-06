@@ -21,7 +21,6 @@ class VideoData(Video):
         scroll_range (int): this specifies how far to scroll down the youtube page to grab links.
                             Note: 30 videos are captured per each scroll. When variable is set to 0,
                             30 videos are returned
-        driver_path (str): the path to Chrome Driver on system.
         driver (str): contains the specified Chrome Driver path
     """
 
